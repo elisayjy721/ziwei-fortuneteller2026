@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>紫微斗数命盘 · 2026年运势</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#faf9ff;--bg2:#f0eeff;--bg3:#e8e5ff;
+  --text:#26215C;--text2:#534AB7;--text3:#7F77DD;--text4:#AFA9EC;
+  --border:rgba(127,119,221,0.15);--border2:rgba(127,119,221,0.3);
+  --purple1:#EEEDFE;--purple2:#CECBF6;--purple3:#AFA9EC;
+  --purple4:#7F77DD;--purple5:#534AB7;--purple6:#3C3489;--purple7:#26215C;
+  --radius:12px;--radius-sm:8px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f0d1a;--bg2:#1a1728;--bg3:#221f33;
+    --text:#e8e6ff;--text2:#CECBF6;--text3:#AFA9EC;--text4:rgba(175,169,236,0.5);
+    --border:rgba(175,169,236,0.12);--border2:rgba(175,169,236,0.25);
+    --purple1:#26215C;--purple2:#3C3489;--purple3:#534AB7;
+  }
+}
+body{font-family:'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:2rem 1rem}
+
+.hero{position:relative;text-align:center;padding:2.5rem 1rem 2rem;margin-bottom:1.5rem;border:0.5px solid var(--border2);border-radius:var(--radius);overflow:hidden;background:var(--bg2)}
+.hero-deco{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.hero h1{font-size:28px;font-weight:600;letter-spacing:0.14em;color:var(--text);position:relative;z-index:1;margin-bottom:4px}
+.hero p{font-size:12px;color:var(--text3);letter-spacing:0.1em;position:relative;z-index:1}
+.hero .subtitle{font-size:11px;color:var(--text4);margin-top:2px;letter-spacing:0.06em;position:relative;z-index:1}
+
+.form-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.field label{display:block;font-size:11px;color:var(--text3);margin-bottom:4px;letter-spacing:0.05em}
+.field input,.field select{width:100%;background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;color:var(--text);outline:none;appearance:none;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--purple4)}
+.btn-go{width:100%;padding:12px;font-size:14px;font-weight:600;letter-spacing:0.12em;cursor:pointer;border-radius:var(--radius-sm);border:1px solid var(--purple4);color:var(--purple6);background:var(--purple1);transition:background 0.2s}
+.btn-go:hover{background:var(--purple2)}
+@media(prefers-color-scheme:dark){.btn-go{color:var(--purple2);background:var(--purple7)}.btn-go:hover{background:var(--purple6)}}
+
+.section{display:none}.section.on{display:block}
+
+.info-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1.5rem}
+.info-chip{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px;text-align:center}
+.info-chip .lbl{font-size:11px;color:var(--text3);letter-spacing:0.04em}
+.info-chip .val{font-size:16px;font-weight:600;color:var(--text);margin-top:2px}
+
+.section-title{font-size:11px;font-weight:600;letter-spacing:0.12em;color:var(--text4);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+
+.chart-wrap{margin-bottom:1.5rem}
+canvas.star-canvas{display:block;width:100%;border-radius:var(--radius);border:0.5px solid var(--border)}
+
+.forecast-2026{background:var(--bg2);border:1px solid var(--purple4);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.yr-badge{display:inline-block;background:var(--purple1);color:var(--purple6);font-size:11px;font-weight:600;padding:3px 12px;border-radius:20px;letter-spacing:0.08em;margin-bottom:12px}
+@media(prefers-color-scheme:dark){.yr-badge{background:var(--purple7);color:var(--purple2)}}
+.forecast-2026 h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px}
+.score-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.score-label{font-size:12px;color:var(--text3);width:48px;flex-shrink:0}
+.score-bar-bg{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.score-bar{height:6px;border-radius:3px;transition:width 1s ease}
+.score-val{font-size:12px;font-weight:600;width:28px;text-align:right}
+.forecast-2026 p{font-size:13px;color:var(--text);line-height:1.8;margin-top:12px}
+
+.color-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.color-card{border:0.5px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg2)}
+.color-swatch{width:100%;height:40px;border-radius:6px;margin-bottom:8px}
+.color-card .cname{font-size:13px;font-weight:600;color:var(--text)}
+.color-card .cdesc{font-size:11px;color:var(--text3);margin-top:3px;line-height:1.5}
+
+.analysis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.acard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem}
+.acard .atitle{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.08em;margin-bottom:6px}
+.acard p{font-size:12px;color:var(--text);line-height:1.75}
+
+.summary-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+.summary-box p{font-size:13px;color:var(--text);line-height:1.85}
+.note{font-size:11px;color:var(--text4);text-align:center;padding:1rem 0 2rem}
+
+@media(max-width:480px){
+  .form-row{grid-template-columns:1fr 1fr}
+  .info-strip{grid-template-columns:repeat(2,1fr)}
+  .analysis-grid{grid-template-columns:1fr}
+  .color-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <svg class="hero-deco" viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="60" cy="30" r="1.5" fill="#AFA9EC" opacity="0.5"/>
+      <circle cx="120" cy="80" r="1" fill="#AFA9EC" opacity="0.35"/>
+      <circle cx="200" cy="18" r="2" fill="#7F77DD" opacity="0.25"/>
+      <circle cx="310" cy="60" r="1" fill="#AFA9EC" opacity="0.4"/>
+      <circle cx="400" cy="12" r="1.5" fill="#AFA9EC" opacity="0.35"/>
+      <circle cx="490" cy="90" r="2" fill="#7F77DD" opacity="0.25"/>
+      <circle cx="570" cy="28" r="1" fill="#AFA9EC" opacity="0.5"/>
+      <circle cx="645" cy="65" r="1.5" fill="#AFA9EC" opacity="0.35"/>
+      <circle cx="155" cy="100" r="1" fill="#7F77DD" opacity="0.25"/>
+      <circle cx="355" cy="105" r="1.5" fill="#AFA9EC" opacity="0.35"/>
+      <circle cx="525" cy="55" r="1" fill="#AFA9EC" opacity="0.4"/>
+      <line x1="200" y1="18" x2="310" y2="60" stroke="#AFA9EC" stroke-width="0.3" opacity="0.2"/>
+      <line x1="400" y1="12" x2="490" y2="90" stroke="#AFA9EC" stroke-width="0.3" opacity="0.2"/>
+      <line x1="60" y1="30" x2="155" y2="100" stroke="#AFA9EC" stroke-width="0.3" opacity="0.18"/>
+      <polygon points="350,20 354,32 366,32 356,40 360,52 350,44 340,52 344,40 334,32 346,32" fill="#7F77DD" opacity="0.12"/>
+    </svg>
+    <h1>紫微斗数命盘</h1>
+    <p>星盘推演 · 2026 丙午年流年运势</p>
+    <p class="subtitle">Color Astrology · 五行色彩学</p>
+  </div>
+
+  <div class="form-card">
+    <div class="form-row">
+      <div class="field"><label>出生年份</label><input type="number" id="year" value="1990" min="1900" max="2024"/></div>
+      <div class="field"><label>出生月份</label>
+        <select id="month">
+          <option value="1">一月</option><option value="2">二月</option><option value="3">三月</option>
+          <option value="4">四月</option><option value="5">五月</option><option value="6">六月</option>
+          <option value="7">七月</option><option value="8">八月</option><option value="9">九月</option>
+          <option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option>
+        </select>
+      </div>
+      <div class="field"><label>出生日期</label><input type="number" id="day" value="15" min="1" max="31"/></div>
+    </div>
+    <div class="form-row2">
+      <div class="field"><label>出生时辰</label>
+        <select id="hour">
+          <option value="0">子时 23:00–01:00</option><option value="1">丑时 01:00–03:00</option>
+          <option value="2">寅时 03:00–05:00</option><option value="3">卯时 05:00–07:00</option>
+          <option value="4">辰时 07:00–09:00</option><option value="5">巳时 09:00–11:00</option>
+          <option value="6">午时 11:00–13:00</option><option value="7">未时 13:00–15:00</option>
+          <option value="8">申时 15:00–17:00</option><option value="9">酉时 17:00–19:00</option>
+          <option value="10">戌时 19:00–21:00</option><option value="11">亥时 21:00–23:00</option>
+        </select>
+      </div>
+      <div class="field"><label>性别</label>
+        <select id="gender"><option value="male">男</option><option value="female">女</option></select>
+      </div>
+    </div>
+    <button class="btn-go" onclick="run()">✦ 起盘推命 · 2026年运 ✦</button>
+  </div>
+
+  <div class="section" id="out">
+    <div class="info-strip" id="infoStrip"></div>
+    <div class="section-title">星盘</div>
+    <div class="chart-wrap"><canvas class="star-canvas" id="starChart" height="500"></canvas></div>
+    <div class="section-title">2026 丙午年流年运势</div>
+    <div class="forecast-2026" id="fc2026"></div>
+    <div class="section-title">2026 幸运色彩学</div>
+    <div class="color-grid" id="colorGrid"></div>
+    <div class="section-title">四柱分析</div>
+    <div class="analysis-grid" id="analysisGrid"></div>
+    <div class="summary-box" id="summaryBox"></div>
+    <p class="note">仅供娱乐参考，不构成任何人生决策建议</p>
+  </div>
+
+</div>
+<script>
+const STEMS=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const BRANCHES=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const ELEMS=['木','木','火','火','土','土','金','金','水','水'];
+const PALACE_NAMES=['命宫','兄弟','夫妻','子女','财帛','疾厄','迁移','奴仆','官禄','田宅','福德','父母'];
+const MAIN_STARS=[
+  {n:'紫微',col:'#7F77DD'},{n:'天机',col:'#1D9E75'},{n:'太阳',col:'#EF9F27'},
+  {n:'武曲',col:'#D85A30'},{n:'天同',col:'#5DCAA5'},{n:'廉贞',col:'#D4537E'},
+  {n:'天府',col:'#7F77DD'},{n:'太阴',col:'#85B7EB'},{n:'贪狼',col:'#D85A30'},
+  {n:'巨门',col:'#888780'},{n:'天相',col:'#1D9E75'},{n:'天梁',col:'#EF9F27'},
+  {n:'七杀',col:'#E24B4A'},{n:'破军',col:'#534AB7'}
+];
+
+function yearInfo(y){
+  const si=(y-4+400)%10,bi=(y-4+400)%12;
+  return{stem:STEMS[si],branch:BRANCHES[bi],elem:ELEMS[si],si,bi};
+}
+function placePalaces(month,hour,year){
+  const life=(month-1+hour)%12;
+  const palaces=Array.from({length:12},()=>({main:[],minor:[]}));
+  const yi=yearInfo(year);
+  const zw=(life+yi.bi)%12;
+  palaces[zw].main.push(MAIN_STARS[0]);
+  [[1,1],[3,2],[4,3],[5,4],[8,5]].forEach(([off,si])=>palaces[(zw+off)%12].main.push(MAIN_STARS[si]));
+  const tf=(11-zw+12)%12;
+  [[0,6],[1,7],[2,8],[3,9],[4,10],[5,11],[6,12],[10,13]].forEach(([off,si])=>palaces[(tf+off)%12].main.push(MAIN_STARS[si]));
+  palaces[(life+2)%12].minor.push('文昌');
+  palaces[(life+4)%12].minor.push('文曲');
+  palaces[hour%12].minor.push('天马');
+  return{palaces,life,zw};
+}
+function drawChart(palaces,life,year,month,hour){
+  const canvas=document.getElementById('starChart');
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth||680;
+  const H=500;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const bgCol=isDark?'#1a1728':'#f0eeff';
+  const lineCol=isDark?'rgba(175,169,236,0.12)':'rgba(127,119,221,0.1)';
+  const textPri=isDark?'#e8e6ff':'#26215C';
+  const textSec=isDark?'#AFA9EC':'#534AB7';
+  ctx.fillStyle=bgCol;ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2;
+  const R1=Math.min(W,H)*0.43;
+  const R2=R1*0.55,R3=R1*0.25;
+  for(let i=0;i<3;i++){
+    ctx.beginPath();ctx.arc(cx,cy,R3+(R1-R3)*i/2,0,Math.PI*2);
+    ctx.strokeStyle=lineCol;ctx.lineWidth=0.5;ctx.stroke();
+  }
+  for(let i=0;i<12;i++){
+    const ang=i*Math.PI/6-Math.PI/2;
+    const ang2=(i+1)*Math.PI/6-Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx+R3*Math.cos(ang),cy+R3*Math.sin(ang));
+    ctx.lineTo(cx+R1*Math.cos(ang),cy+R1*Math.sin(ang));
+    ctx.strokeStyle=lineCol;ctx.lineWidth=0.5;ctx.stroke();
+    const midAng=(ang+ang2)/2;
+    const rMid=(R1+R2)/2;
+    const px=cx+rMid*Math.cos(midAng),py=cy+rMid*Math.sin(midAng);
+    const pIdx=(life+i)%12;
+    const isLife=(pIdx===life);
+    if(isLife){
+      ctx.beginPath();ctx.arc(px,py,30,0,Math.PI*2);
+      ctx.fillStyle=isDark?'rgba(127,119,221,0.18)':'rgba(127,119,221,0.1)';ctx.fill();
+    }
+    ctx.save();ctx.translate(px,py);
+    ctx.font=`${isLife?600:500} 12px 'PingFang SC',sans-serif`;
+    ctx.fillStyle=isLife?(isDark?'#CECBF6':'#3C3489'):textSec;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(PALACE_NAMES[pIdx],0,isLife?-13:0);
+    if(isLife){
+      ctx.font=`400 10px 'PingFang SC',sans-serif`;
+      ctx.fillStyle=isDark?'#AFA9EC':'#534AB7';
+      ctx.fillText('命宫',0,5);
+    }
+    const stars=palaces[pIdx];
+    const allS=[...stars.main,...stars.minor];
+    if(allS.length>0){
+      const rInner=(R2+R3)/2;
+      const sx=cx+rInner*Math.cos(midAng),sy=cy+rInner*Math.sin(midAng);
+      ctx.restore();ctx.save();ctx.translate(sx,sy);
+      allS.slice(0,3).forEach((s,idx)=>{
+        const name=typeof s==='object'?s.n:s;
+        const col=typeof s==='object'?s.col:(isDark?'#9FE1CB':'#1D9E75');
+        ctx.font=`500 10px 'PingFang SC',sans-serif`;
+        ctx.fillStyle=col;ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(name,0,(idx-Math.floor(allS.slice(0,3).length/2))*13);
+      });
+    }
+    ctx.restore();
+  }
+  ctx.save();ctx.translate(cx,cy);
+  const yi=yearInfo(year);
+  [`${yi.stem}${yi.branch}年`,'五行 '+yi.elem,'2026流年'].forEach((t,i)=>{
+    ctx.font=i===0?`600 14px 'PingFang SC',sans-serif`:`400 11px 'PingFang SC',sans-serif`;
+    ctx.fillStyle=i===2?(isDark?'#CECBF6':'#3C3489'):(i===0?textPri:textSec);
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(t,0,(i-1)*17);
+  });
+  ctx.restore();
+  [[0.12,0.08],[0.88,0.07],[0.08,0.9],[0.92,0.88],[0.5,0.03],[0.03,0.5],[0.97,0.5],[0.5,0.97],[0.25,0.15],[0.75,0.85]].forEach(([rx,ry])=>{
+    ctx.beginPath();ctx.arc(rx*W,ry*H,1.2,0,Math.PI*2);
+    ctx.fillStyle=isDark?'rgba(175,169,236,0.5)':'rgba(127,119,221,0.35)';ctx.fill();
+  });
+}
+function get2026Scores(elem){
+  return({'木':{career:78,love:72,wealth:80,health:68},'火':{career:85,love:68,wealth:75,health:72},'土':{career:70,love:80,wealth:85,health:75},'金':{career:88,love:74,wealth:90,health:70},'水':{career:75,love:85,wealth:72,health:80}})[elem]||{career:75,love:75,wealth:75,health:75};
+}
+function get2026Text(elem){
+  return({'木':'丙午年属火，火能生土，木需泄火之气，2026年对木命者而言是蓄势之年。上半年宜稳健布局，下半年（尤其秋季）财运与事业双双回升。人际关系是最大助力，宜广结善缘。','火':'丙午年与火命者同气相求，能量旺盛。2026年上半年势如破竹，事业机遇不断，但需防锋芒过露。下半年宜收敛，注重身体健康，避免过度消耗。','土':'丙午年火生土，土命者迎来厚积薄发的黄金期。财运稳步上升，不动产与长期投资回报可期。人际上贵人频现，宜把握合作机会，但需防小人背刺。','金':'丙午年火克金，金命者面临考验与蜕变。2026年不宜冒进，宜守不宜攻。投资需保守，但若能沉住气、精进技能，下半年运势将大幅好转，是逆风成长之年。','水':'丙午年火旺水弱，水命者宜低调行事，以柔克刚。感情与家庭运势佳，适合巩固关系、修身养性。事业上宜借助他人之力，切忌单打独斗。'})[elem]||'2026丙午年运势平稳，各方面均衡发展，宜把握机遇，顺势而为。';
+}
+const LUCKY_COLORS={
+  '木':[{name:'翡翠绿',hex:'#5DCAA5',desc:'生机勃勃，助旺木气'},{name:'靛青蓝',hex:'#378ADD',desc:'水生木，增智慧运'},{name:'浅金黄',hex:'#FAC775',desc:'中和火气，稳定心神'}],
+  '火':[{name:'朱砂红',hex:'#D85A30',desc:'旺火助势，强化气场'},{name:'暖橙金',hex:'#EF9F27',desc:'热情四射，吸引贵人'},{name:'象牙白',hex:'#D3D1C7',desc:'平衡过旺之火，保守财'}],
+  '土':[{name:'赤陶橙',hex:'#D85A30',desc:'火生土，强化土之能量'},{name:'米驼黄',hex:'#FAC775',desc:'土色本命，稳重富足'},{name:'茶褐绿',hex:'#97C459',desc:'中和调节，引动生机'}],
+  '金':[{name:'银白',hex:'#D3D1C7',desc:'金色本命，保护气场'},{name:'深紫',hex:'#534AB7',desc:'化解火克，转危为机'},{name:'翠绿',hex:'#5DCAA5',desc:'泄火气，护金运'}],
+  '水':[{name:'靛蓝',hex:'#185FA5',desc:'水命本色，深邃灵动'},{name:'墨黑',hex:'#444441',desc:'以黑助水，增强运势'},{name:'淡紫',hex:'#AFA9EC',desc:'柔和过渡，迎接贵人'}],
+};
+const FORTUNE={
+  '木':{career:'木逢火旺，才华得以施展，创意行业尤佳',love:'感情需主动表达，缘分在人群聚集处',wealth:'偏财运一般，正财稳健，宜长期投资',health:'注意肝胆，春季多保养'},
+  '火':{career:'运势旺盛，宜把握晋升机会，避免冲动决策',love:'桃花运极旺，但易感情冲动，需冷静',wealth:'投机运旺，但需防暴起暴落，见好就收',health:'注意心脏与血压，夏季尤需注意'},
+  '土':{career:'稳步晋升，贵人相助，管理职位有利',love:'感情稳定，适合论及婚嫁，家庭运佳',wealth:'财运丰厚，不动产投资获利，宜守不宜动',health:'注意脾胃，少食辛辣，规律作息'},
+  '金':{career:'逆境磨砺，下半年迎来突破，技能精进有回报',love:'感情波折，需多沟通，切忌固执己见',wealth:'投资需保守，现金为王，防资金损失',health:'注意肺与呼吸道，秋冬保暖'},
+  '水':{career:'借力打力，贵人运佳，合伙事业顺遂',love:'感情甜蜜，桃花运稳，缘分在水边',wealth:'财运流动性强，灵活理财，防漏财',health:'注意肾与腰背，多饮水，避免熬夜'},
+};
+function run(){
+  const year=parseInt(document.getElementById('year').value);
+  const month=parseInt(document.getElementById('month').value);
+  const hour=parseInt(document.getElementById('hour').value);
+  const gender=document.getElementById('gender').value;
+  if(!year||year<1900||year>2024){alert('请输入有效年份 (1900-2024)');return;}
+  const yi=yearInfo(year);
+  const {palaces,life}=placePalaces(month,hour,year);
+  const lifePalStars=palaces[life].main;
+  const mainStar=lifePalStars.length>0?lifePalStars[0]:MAIN_STARS[0];
+  const starName=typeof mainStar==='object'?mainStar.n:mainStar;
+  const hrNames=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  document.getElementById('infoStrip').innerHTML=`
+    <div class="info-chip"><div class="lbl">生年干支</div><div class="val">${yi.stem}${yi.branch}</div></div>
+    <div class="info-chip"><div class="lbl">五行</div><div class="val">${yi.elem}</div></div>
+    <div class="info-chip"><div class="lbl">命宫主星</div><div class="val">${starName}</div></div>
+    <div class="info-chip"><div class="lbl">生时</div><div class="val">${hrNames[hour]}时</div></div>`;
+  const out=document.getElementById('out');
+  out.classList.add('on');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>drawChart(palaces,life,year,month,hour)));
+  const scores=get2026Scores(yi.elem);
+  const sc=v=>v>=80?'#1D9E75':v>=65?'#EF9F27':'#D85A30';
+  document.getElementById('fc2026').innerHTML=`
+    <div class="yr-badge">2026 · 丙午年</div>
+    <h3>${starName}星 · ${yi.elem}命流年推算</h3>
+    ${[['career','事业'],['love','感情'],['wealth','财富'],['health','健康']].map(([k,l])=>`
+    <div class="score-row">
+      <span class="score-label">${l}</span>
+      <div class="score-bar-bg"><div class="score-bar" style="width:${scores[k]}%;background:${sc(scores[k])}"></div></div>
+      <span class="score-val" style="color:${sc(scores[k])}">${scores[k]}</span>
+    </div>`).join('')}
+    <p>${get2026Text(yi.elem)}</p>`;
+  const cols=LUCKY_COLORS[yi.elem]||LUCKY_COLORS['水'];
+  document.getElementById('colorGrid').innerHTML=cols.map(c=>`
+    <div class="color-card">
+      <div class="color-swatch" style="background:${c.hex}"></div>
+      <div class="cname">${c.name}</div>
+      <div class="cdesc">${c.desc}</div>
+    </div>`).join('');
+  const f=FORTUNE[yi.elem]||{career:'事业顺遂',love:'感情美满',wealth:'财运平稳',health:'身体健康'};
+  document.getElementById('analysisGrid').innerHTML=`
+    <div class="acard"><div class="atitle">事业</div><p>${f.career}</p></div>
+    <div class="acard"><div class="atitle">感情</div><p>${f.love}</p></div>
+    <div class="acard"><div class="atitle">财富</div><p>${f.wealth}</p></div>
+    <div class="acard"><div class="atitle">健康</div><p>${f.health}</p></div>`;
+  const dirs=['东南','正南','西南','正西','西北','正北','东北','正东','东南'];
+  document.getElementById('summaryBox').innerHTML=`<p>命主五行属${yi.elem}，生于${yi.stem}${yi.branch}年，命宫主星为${starName}。2026丙午年属火，${yi.elem}命者${{'金':'受火克制，宜守稳中求变','水':'火旺水弱，宜柔顺借力','木':'火泄木气，宜积蓄待发','火':'同气旺盛，势头强劲需防过激','土':'火来生土，厚积薄发运势佳'}[yi.elem]||'运势平稳'}。整体而言，上半年宜布局，下半年是收获期。幸运数字：${(year%9)+1}，幸运方位：${dirs[year%9]}。</p>`;
+}
+</script>
+</body>
+</html>
